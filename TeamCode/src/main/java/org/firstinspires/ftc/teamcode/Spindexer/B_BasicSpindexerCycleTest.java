@@ -62,12 +62,16 @@ public class B_BasicSpindexerCycleTest extends OpMode {
         // Feel free to learn more about switch statements online
         switch (currentState) {
             case WAIT_AT_FIRST_HOLDER:
-                // TODO: 
+                // TODO: Set the target angle of the spindexer to the correct spindexer position
 
                 break;
             case WAIT_AT_SECOND_HOLDER:
+                // TODO: Set the target angle of the spindexer to the correct spindexer position
+
                 break;
             case WAIT_AT_THIRD_HOLDER:
+                // TODO: Set the target angle of the spindexer to the correct spindexer position
+
                 break;
         }
     }
