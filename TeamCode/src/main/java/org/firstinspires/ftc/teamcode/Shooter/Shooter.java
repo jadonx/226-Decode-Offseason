@@ -36,7 +36,7 @@ public class Shooter {
         return 0.0;
     }
 
-    // TODO: Return the current velocity of the shooter
+    // TODO: Return the current velocity of the shooter, you may need to average out values
     public double getCurrentVelocity() {
         return 0.0;
     }
