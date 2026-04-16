@@ -1,0 +1,49 @@
+package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.hardware.I2cAddr;
+import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
+import com.qualcomm.robotcore.hardware.I2cDeviceSynchDevice;
+import com.qualcomm.robotcore.hardware.configuration.annotations.DeviceProperties;
+import com.qualcomm.robotcore.hardware.configuration.annotations.I2cDeviceType;
+
+@I2cDeviceType
+@DeviceProperties(name = "SpindexerEncoder", xmlTag = "SpindexerEncoder")
+public class SpindexerEncoder extends I2cDeviceSynchDevice<I2cDeviceSynch> {
+    private static final I2cAddr ADDRESS_AS5600 = I2cAddr.create7bit(0x36);
+    private static final int RAW_ANGLE_HIGH = 0x0C;
+
+    public SpindexerEncoder(I2cDeviceSynch deviceSynch) {
+        super(deviceSynch, true);
+        this.deviceClient.setI2cAddress(ADDRESS_AS5600);
+        this.deviceClient.engage();
+    }
+
+    @Override
+    protected boolean doInitialize() {
+        return true;
+    }
+
+    // Get raw 12 bits
+    private int getRaw12() {
+        byte[] data = deviceClient.read(RAW_ANGLE_HIGH, 2);
+
+        int high = data[0] & 0x0F;  // lower 4 bits are valid
+        int low  = data[1] & 0xFF;
+
+        return (high << 8) | low;
+    }
+
+    public double getWrappedAngle() {
+        return getRaw12() * (360.0 / 4096.0);
+    }
+
+    @Override
+    public Manufacturer getManufacturer() {
+        return Manufacturer.Other;
+    }
+
+    @Override
+    public String getDeviceName() {
+        return "AS5600 Magnetic Encoder";
+    }
+}
